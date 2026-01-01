@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود و ثبت‌نام | GapGPT</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* استایل‌های اختصاصی برای این صفحه */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+            margin: 0;
+            overflow: hidden;
+        }
+        .auth-container {
+            width: 400px;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+        .auth-box {
+            display: none;
+        }
+        .auth-box.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        .auth-box h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #10a37f;
+            font-weight: 900;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+            text-align: right;
+        }
+        .input-group input:focus {
+            border-color: #10a37f;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: #10a37f;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .auth-btn:hover { background: #0d8a6a; transform: translateY(-2px); }
+        
+        .switch-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #777;
+        }
+        .switch-text a {
+            color: #10a37f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* استایل اعلان (Toast) */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10a37f;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            z-index: 2000;
+            animation: slideIn 0.5s ease forwards;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(120%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container card-3d">
+        <div id="loginForm" class="auth-box active">
+            <h2>ورود به حساب</h2>
+            <div class="input-group">
+                <label>نام کاربری</label>
+                <input type="text" id="loginUser" placeholder="نام کاربری خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label>رمز عبور</label>
+                <input type="password" id="loginPass" placeholder="********">
+            </div>
+            <button type="button" class="auth-btn" id="loginSubmit">ورود به حساب</button>
+            <p class="switch-text">حساب کاربری ندارید؟ <a href="javascript:void(0)" onclick="toggleAuth('signup')">ثبت‌نام کنید</a></p>
+        </div>
+
+        <div id="signupForm" class="auth-box">
+            <h2>ساخت حساب جدید</h2>
+            <div class="input-group">
+                <label>نام کاربری</label>
+                <input type="text" id="regUser" placeholder="یک نام کاربری انتخاب کنید">
+            </div>
+            <div class="input-group">
+                <label>ایمیل</label>
+                <input type="email" id="regEmail" placeholder="example@gmail.com">
+            </div>
+            <div class="input-group">
+                <label>رمز عبور</label>
+                <input type="password" id="regPass" placeholder="یک رمز عبور قوی انتخاب کنید">
+            </div>
+            <button type="button" class="auth-btn" id="signupSubmit">تایید و ایجاد حساب</button>
+            <p class="switch-text">قبلاً ثبت‌نام کرده‌اید؟ <a href="javascript:void(0)" onclick="toggleAuth('login')">وارد شوید</a></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAuth(type) {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            if (type === 'signup') {
+                loginForm.classList.remove('active');
+                signupForm.classList.add('active');
+            } else {
+                signupForm.classList.remove('active');
+                loginForm.classList.add('active');
+            }
+        }
+
+        // ایجاد تگ پیام موفقیت
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = '<i class="fas fa-check-circle"></i> عملیات با موفقیت انجام شد. در حال انتقال...';
+        document.body.appendChild(toast);
+
+        function handleSubmit() {
+    // گرفتن اطلاعات پنل از آدرس بار
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan');
+    const price = params.get('price');
+
+    // نمایش نوتیفیکیشن موفقیت
+    toast.style.display = 'block';
+    
+    document.getElementById('loginSubmit').disabled = true;
+    document.getElementById('signupSubmit').disabled = true;
+
+    setTimeout(() => {
+        // شرط انتقال هوشمند
+        if (plan && price) {
+            // اگر از دکمه خرید آمده بود -> هدایت به صفحه پرداخت با همان اطلاعات
+            window.location.href = `payment.html?plan=${plan}&price=${price}`;
+        } else {
+            // اگر عادی ثبت‌نام کرده بود -> هدایت به صفحه چت
+            window.location.href = 'pages/chat.html'; 
+        }
+    }, 2000);
+}
+
+        // گوش دادن به کلیک دکمه‌ها
+        document.getElementById('loginSubmit').addEventListener('click', handleSubmit);
+        document.getElementById('signupSubmit').addEventListener('click', handleSubmit);
+    </script>
+</body>
+</html>

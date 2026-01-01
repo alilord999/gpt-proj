@@ -1,0 +1,446 @@
+/* ===================================================
+   ۱. تنظیمات پایه و فونت
+   =================================================== */
+   * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Vazirmatn', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: #121212;
+    color: white;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ===================================================
+   ۲. هدر و ناوبری (Navbar)
+   =================================================== */
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 900;
+    color: #10a37f;
+    letter-spacing: 1px;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.login-link {
+    text-decoration: none;
+    color: #ccc;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.login-link:hover { color: white; }
+
+.signup-btn {
+    text-decoration: none;
+    background: #10a37f;
+    color: white;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.signup-btn:hover { background: #0d8a6a; transform: translateY(-2px); }
+
+/* ===================================================
+   ۳. بخش هیرو (Hero Section) و رادار
+   =================================================== */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+#radarCanvas {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-box {
+    position: relative;
+    z-index: 10;
+    background: rgba(30, 30, 30, 0.6);
+    backdrop-filter: blur(15px);
+    padding: 60px 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    /* رفع تاری */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    transition: 0.5s;
+}
+
+.hero-box:hover { transform: translateY(-10px) translateZ(0); }
+
+.badge {
+    background: rgba(16, 163, 127, 0.15);
+    color: #10a37f;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid rgba(16, 163, 127, 0.3);
+    margin-bottom: 25px;
+    display: inline-block;
+}
+
+.hero-box h1 {
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fff, #10a37f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-box p {
+    font-size: 19px;
+    color: #aaa;
+    margin-bottom: 40px;
+}
+
+.cta-btn {
+    text-decoration: none;
+    background: #10a37f;
+    color: white;
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.3s;
+    display: inline-block;
+    box-shadow: 0 10px 20px rgba(16, 163, 127, 0.3);
+}
+
+.cta-btn:hover { background: #0d8a6a; transform: scale(1.05); }
+
+/* ===================================================
+   ۴. استایل باکس‌های سه بعدی مشترک
+   =================================================== */
+.card-3d {
+    background: rgba(45, 45, 45, 0.4);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    transition: 0.4s ease;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    /* کلید رفع تاری متن */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+.card-3d:hover {
+    transform: translateY(-10px) translateZ(0);
+    border-color: rgba(16, 163, 127, 0.4);
+    box-shadow: 0 20px 40px rgba(16, 163, 127, 0.15);
+}
+
+/* ===================================================
+   ۵. بخش درباره ما و پیش‌نمایش چت
+   =================================================== */
+.about-section { padding: 100px 10%; }
+
+.about-container {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding: 50px;
+    flex-wrap: wrap;
+}
+
+.about-text { flex: 1.2; min-width: 300px; }
+.about-text h2 { color: #10a37f; font-size: 34px; margin-bottom: 20px; }
+.about-text p { color: #ccc; font-size: 17px; line-height: 1.8; }
+
+.chat-preview {
+    flex: 1;
+    min-width: 320px;
+    background: #181818;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #333;
+    transform: translateZ(0);
+}
+
+.chat-preview-header {
+    background: #252525;
+    padding: 12px 18px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 12px;
+    color: #777;
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+
+.chat-preview-body { padding: 25px; display: flex; flex-direction: column; gap: 15px; }
+.msg { padding: 12px 16px; border-radius: 12px; font-size: 14px; max-width: 85%; }
+.user-msg { background: #343541; align-self: flex-end; color: #fff; }
+.ai-msg { background: rgba(16, 163, 127, 0.1); border: 1px solid #10a37f; align-self: flex-start; color: #10a37f; }
+
+/* ===================================================
+   ۶. بخش قیمت‌گذاری (Pricing)
+   =================================================== */
+.pricing-section { padding: 100px 10%; text-align: center; }
+.section-title { font-size: 38px; margin-bottom: 60px; color: #fff; }
+
+.pricing-container {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.price-card {
+    padding: 50px 40px;
+    width: 340px;
+    position: relative;
+    text-align: right;
+    transform: translateZ(0); /* رفع تاری */
+}
+
+.price-card.featured {
+    border: 2px solid #10a37f;
+    /* کاهش مقیاس برای شفافیت متن */
+    transform: scale(1.02) translateZ(0);
+}
+
+.price { font-size: 36px; font-weight: 800; color: #10a37f; margin: 25px 0; }
+.price span { font-size: 14px; color: #777; }
+.old-price { text-decoration: line-through; color: #666; font-size: 18px; margin-bottom: 10px; }
+
+.discount-badge {
+    position: absolute; top: -15px; left: 30px;
+    background: #10a37f; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;
+}
+
+.price-card ul { list-style: none; margin-bottom: 40px; }
+.price-card li { margin-bottom: 15px; color: #bbb; display: flex; align-items: center; gap: 10px; }
+.price-card li i { color: #10a37f; }
+
+.cta-btn.small { padding: 12px 30px; font-size: 15px; display: block; text-align: center; width: 100%; }
+
+/* ===================================================
+   ۷. بخش نظرات (Slider)
+   =================================================== */
+.reviews-section { padding: 100px 0; background: #0f0f0f; overflow: hidden; }
+
+.reviews-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    direction: ltr;
+}
+
+.reviews-slider {
+    display: flex;
+    width: 300%;
+    transition: transform 0.8s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+.review-group {
+    width: 33.333%;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px 5%;
+    direction: rtl;
+}
+
+.review-card {
+    flex: 1;
+    max-width: 500px;
+    padding: 40px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.review-card p { font-style: italic; color: #ddd; font-size: 16px; margin-bottom: 20px; }
+.review-card h4 { color: #10a37f; font-size: 18px; }
+.review-card span { color: #666; font-size: 13px; }
+
+/* ===================================================
+   ۸. ویژگی‌های پایین (Features)
+   =================================================== */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 100px 10%;
+    flex-wrap: wrap;
+    background: #121212;
+}
+
+.feature-card {
+    background: #1a1a1a;
+    padding: 40px 30px;
+    border-radius: 20px;
+    width: 280px;
+    text-align: center;
+    transition: 0.3s;
+    border: 1px solid #222;
+    transform: translateZ(0);
+}
+
+.feature-card:hover { transform: translateY(-10px) translateZ(0); border-color: #10a37f; }
+.feature-card i { font-size: 45px; color: #10a37f; margin-bottom: 20px; }
+
+/* ===================================================
+   ۹. فوتر (Footer)
+   =================================================== */
+.main-footer {
+    background: #080808;
+    padding: 80px 10% 30px;
+    border-top: 1px solid #222;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-col { flex: 1; min-width: 250px; }
+.footer-col h3 { color: #10a37f; margin-bottom: 25px; font-size: 24px; }
+.footer-col h4 { color: #fff; margin-bottom: 25px; }
+.footer-col p { color: #888; line-height: 1.8; }
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { color: #888; text-decoration: none; transition: 0.3s; }
+.footer-col ul li a:hover { color: #10a37f; padding-right: 8px; }
+
+.social-links { display: flex; gap: 15px; margin-top: 25px; }
+.social-links a {
+    width: 45px; height: 45px;
+    background: #1a1a1a;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.social-links a:hover { background: #10a37f; transform: translateY(-5px) translateZ(0); }
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid #1a1a1a;
+    color: #555;
+    font-size: 14px;
+}
+
+/* ===================================================
+   ۱۰. استایل‌های اختصاصی پنل چت (Chat Layout)
+   =================================================== */
+.chat-page { background-color: #212121; height: 100vh; overflow: hidden; }
+.container { display: flex; height: 100vh; width: 100vw; }
+
+.sidebar {
+    width: 260px; background-color: #000; padding: 15px;
+    display: flex; flex-direction: column; border-left: 1px solid #333;
+}
+
+.new-chat-btn {
+    background: transparent; border: 1px solid #4d4d4d; color: white;
+    padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 20px;
+    transition: 0.3s; text-align: right; width: 100%;
+}
+
+.new-chat-btn:hover { background: #2b2b2b; }
+
+.history-list { flex: 1; overflow-y: auto; }
+.history-item { padding: 10px; color: #ccc; font-size: 14px; cursor: pointer; border-radius: 6px; margin-bottom: 5px; }
+.history-item:hover { background: #2b2b2b; }
+.history-item i { margin-left: 10px; }
+
+.user-profile { padding: 15px; border-top: 1px solid #333; display: flex; align-items: center; gap: 12px; }
+.user-avatar { width: 35px; height: 35px; background: #10a37f; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+
+.chat-main { flex: 1; display: flex; flex-direction: column; background-color: #212121; position: relative; }
+
+.chat-header {
+    padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: center; align-items: center;
+}
+
+.model-selector-container {
+    display: flex; align-items: center; gap: 10px;
+    background: #2f2f2f; padding: 5px 15px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.model-dropdown { background: transparent; color: white; border: none; outline: none; cursor: pointer; }
+
+.messages-container { flex: 1; overflow-y: auto; padding: 40px 15%; display: flex; flex-direction: column; gap: 30px; }
+.message { padding: 20px; line-height: 1.8; font-size: 16px; max-width: 90%; transform: translateZ(0); }
+.message.user { background: #3e3f4b; border-radius: 15px; align-self: flex-start; margin-right: auto; }
+.message.ai { background: transparent; align-self: flex-start; border-right: 3px solid #10a37f; padding-right: 20px; }
+
+.input-area { padding: 20px 15% 40px; }
+.input-wrapper { position: relative; display: flex; align-items: center; }
+.input-wrapper input {
+    width: 100%; background: #40414f; border: 1px solid rgba(0,0,0,0.1);
+    padding: 15px 20px 15px 50px; border-radius: 12px; color: white; outline: none;
+}
+
+.send-btn {
+    position: absolute; left: 10px; background: #10a37f; color: white;
+    border: none; width: 35px; height: 35px; border-radius: 8px; cursor: pointer;
+}
+
+/* ===================================================
+   ۱۱. استایل اعلان (Toast) و صفحه پرداخت
+   =================================================== */
+.toast {
+    position: fixed; top: 20px; right: 20px; background: #10a37f; color: white;
+    padding: 15px 25px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: none; z-index: 2000; animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+
+.payment-card { width: 450px; padding: 40px; text-align: center; margin: 100px auto; }
+.plan-info { background: rgba(16, 163, 127, 0.1); padding: 20px; border-radius: 15px; margin: 20px 0; border: 1px dashed #10a37f; }

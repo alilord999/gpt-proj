@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>پنل گفتگو | GapGPT</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="chat-page">
+
+    <div class="container">
+        <aside class="sidebar">
+            <button class="new-chat-btn">
+                <i class="fas fa-plus"></i> گفتگو جدید
+            </button>
+            
+            <div class="history-list">
+                <div class="history-item"><i class="far fa-comment-alt"></i> حل تمرین ریاضی</div>
+                <div class="history-item"><i class="far fa-comment-alt"></i> ایده برای محتوا</div>
+                <div class="history-item"><i class="far fa-comment-alt"></i> کدنویسی پایتون</div>
+            </div>
+
+            <div class="user-profile">
+                <div class="user-avatar">U</div>
+                <span>کاربر مهمان</span>
+            </div>
+        </aside>
+
+        <main class="chat-main">
+            <header class="chat-header">
+                <span>مدل هوشمند GapGPT 4.0</span>
+            </header>
+
+            <div class="messages-container" id="chatWindow">
+                <div class="message ai">
+                    سلام! من GapGPT هستم. چطور می‌تونم کمکت کنم؟
+                </div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="سوال خود را اینجا بپرسید...">
+                    <button class="send-btn" id="sendMsg">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <p class="input-footer-text">GapGPT ممکن است اطلاعات اشتباه نمایش دهد.</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chatWindow');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendMsg');
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (text !== "") {
+                // اضافه کردن پیام کاربر
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message user';
+                userDiv.textContent = text;
+                chatWindow.appendChild(userDiv);
+
+                userInput.value = ""; // خالی کردن ورودی
+                
+                // اسکرول به پایین
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+
+                // شبیه‌سازی پاسخ هوش مصنوعی بعد از ۱ ثانیه
+                setTimeout(() => {
+                    const aiDiv = document.createElement('div');
+                    aiDiv.className = 'message ai';
+                    aiDiv.textContent = "این یک پاسخ شبیه‌سازی شده است. برای اتصال به مغز اصلی AI نیاز به کدنویسی بک‌اِند داریم.";
+                    chatWindow.appendChild(aiDiv);
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
